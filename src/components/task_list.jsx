@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OneTask from './one_task';
 
 export default class TaskList extends Component{
     constructor(){
