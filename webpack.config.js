@@ -3,7 +3,7 @@ module.exports={
         './src/index.jsx'
     ],
     output:{
-        path:__dirnam,
+        path:__dirname,
         publicPath: '/',
         filename: 'src/out.js'
     },

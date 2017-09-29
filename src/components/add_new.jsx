@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
 export default class AddNew extends Component{
-    constructor(){
+    constructor(props){
+        super(props)
         this.state={
             value: 'Add new task'
         }
@@ -11,18 +12,19 @@ export default class AddNew extends Component{
             value: e.target.value
         })
     }
-    handleFormSubmit = () =>{
-        
+    handleFormSubmit = (e) =>{
+        e.preventDefault()
+        this.props.onFormSubmit(this.state.value)
     }
     render(){
         return(
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={this.handleFormSubmit}>
                 <label>
                     Add new task:
                     <input 
-                    type="text" 
-                    value={this.state.value}
-                    onChange={handleInputChange}
+                        type="text" 
+                        value={this.state.value}
+                        onChange={this.handleInputChange}
                     />
                 </label>
                 <button>Send</button>

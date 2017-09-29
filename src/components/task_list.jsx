@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import OneTask from './one_task';
 
 export default class TaskList extends Component{
-    constructor(){
-        
-        this.state={
-            tasks: [],
-        }
-    }
-    renderTask(){
-        this.state.tasks.map(elem=>{
-            return <li>elem</li>
-        })
+    constructor(props){
+        super(props)
     }
     render(){
         return(
             <ul>
-                {this.renderTask}
+                {this.props.tasks.map((elem,id)=>{
+                    return(
+                        <OneTask 
+                            value={elem}
+                            key={elem+id}
+                        />
+                    )
+                })}
             </ul>
         )
     }

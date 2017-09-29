@@ -5,8 +5,9 @@ export default class OneTask extends Component{
         return(
             <li>
                 <div></div>
-                <div></div>
-                <div></div>
+                <p>{this.props.value}</p>
+                <div>Done</div>
+                <div>Delete</div>
             </li>
         )
     }
