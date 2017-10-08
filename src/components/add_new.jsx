@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class AddNew extends Component{
     constructor(props){
         super(props)
         this.state={
-            value: 'Add new task'
+            value: ''
         }
     }
     handleInputChange = (e) =>{
@@ -25,10 +26,15 @@ export default class AddNew extends Component{
                         type="text" 
                         value={this.state.value}
                         onChange={this.handleInputChange}
+                        placeholder="Add new task!"
                     />
                 </label>
                 <button>Send</button>
             </form>
         )
     }
+}
+
+AddNew.propTypes={
+    onFormSubmit: PropTypes.func.isRequired
 }

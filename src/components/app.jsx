@@ -16,7 +16,6 @@ export default class App extends Component{
         this.setState({
             tasks: tasksCopy
         })
-        console.log(task);
     }
     render(){
         return(

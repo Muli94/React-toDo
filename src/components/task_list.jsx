@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import OneTask from './one_task';
 
-export default class TaskList extends Component{
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return(
-            <ul>
-                {this.props.tasks.map((elem,id)=>{
-                    return(
-                        <OneTask 
-                            value={elem}
-                            key={elem+id}
-                        />
-                    )
-                })}
-            </ul>
-        )
-    }
-}
+const TaskList = props => (
+  <ul>
+    {props.tasks.map(elem => (
+      <OneTask
+        value={elem}
+        key={elem}
+      />
+    ))}
+  </ul>
+);
+
+TaskList.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default TaskList;
