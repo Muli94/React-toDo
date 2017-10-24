@@ -20,12 +20,13 @@ export default class App extends Component{
     }
     onFormSubmit = (todo) =>{
         const tasksCopy = { ...this.state.tasks }
-        tasksCopy[this.state.id] = {...todo}
-        localStorage.setItem('Todos', JSON.stringify(this.state.tasks))
+        const newId = this.state.id + 1
+        tasksCopy[newId] = {...todo}
         this.setState({
             tasks: tasksCopy,
-            id: this.state.id + 1
+            id: newId
         })
+        localStorage.setItem('Todos', JSON.stringify(tasksCopy))
     }
     onDeleteTodo = (id) => {
         const copyObj = { ...this.state.tasks }
@@ -35,11 +36,24 @@ export default class App extends Component{
             tasks: copyObj
         })
     }
+    onDoneTodo = (isDone, id) =>{
+        const copyObj = { ...this.state.tasks }
+        copyObj[id].isDone = isDone
+        localStorage.setItem('Todos', JSON.stringify(copyObj))
+        console.log(copyObj[id])
+        this.setState({
+            tasks: copyObj
+        })
+    }
     render(){
         return(
             <div className="container">
                 <AddNew onFormSubmit={this.onFormSubmit} />
-                <TaskList tasks={this.state.tasks} onDeleteTodo = {this.onDeleteTodo} />
+                <TaskList 
+                    tasks={this.state.tasks} 
+                    onDeleteTodo = {this.onDeleteTodo}
+                    onDoneTodo = {this.onDoneTodo}
+                />
             </div>
         )
     }

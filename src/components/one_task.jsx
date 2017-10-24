@@ -4,14 +4,9 @@ import PropTypes from 'prop-types';
 class OneTask extends Component{
   constructor(props){
     super(props)
-    this.state={
-      isDone: false,
-    }
   }
   handleDoneButton = () => {
-    this.setState({
-      isDone: true
-    })
+    this.props.onDoneTodo(true, this.props.id)
   };
   handleDeleteButton = () => {
     this.props.onDeleteTodo(this.props.id)
@@ -39,5 +34,11 @@ class OneTask extends Component{
   }
 };
 
+OneTask.propTypes={
+  onDeleteTodo: PropTypes.func.isRequired,
+  onDoneTodo: PropTypes.func.isRequired,
+  todo: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
+}
 
 export default OneTask;
