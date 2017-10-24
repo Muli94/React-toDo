@@ -18,10 +18,22 @@ class OneTask extends Component{
   };
   render(){
     return (
-      <li>
-        <p>{this.props.todo}</p>
-        <div onClick={this.handleDoneButton}>Done</div>
-        <div onClick={this.handleDeleteButton}>Delete</div>
+      <li className="single__task">
+        <p className="single__task--text">
+          {this.props.todo}
+        </p>
+        <div 
+          onClick={this.handleDoneButton} 
+          className="single__task-button_done"
+        >
+          Done
+        </div>
+        <div 
+          onClick={this.handleDeleteButton} 
+          className="sindle__task-button_delete"
+        >
+          Delete
+        </div>
       </li>
     );
   }

@@ -4,9 +4,16 @@ import OneTask from './one_task';
 
 const TaskList = props => {
   return(
-    <ul>
+    <ul className="tasks__list">
       { Object.keys(props.tasks).map(elem=>{
-        return <OneTask todo={props.tasks[elem].value} key={elem} id={elem} onDeleteTodo={props.onDeleteTodo}/>
+        return(
+          <OneTask 
+            todo={props.tasks[elem].value} 
+            key={elem} 
+            id={elem} 
+            onDeleteTodo={props.onDeleteTodo}
+          />
+        ) 
       })}
     </ul>
   )

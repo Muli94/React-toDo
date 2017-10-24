@@ -37,7 +37,7 @@ export default class App extends Component{
     }
     render(){
         return(
-            <div>
+            <div className="container">
                 <AddNew onFormSubmit={this.onFormSubmit} />
                 <TaskList tasks={this.state.tasks} onDeleteTodo = {this.onDeleteTodo} />
             </div>

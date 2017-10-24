@@ -18,22 +18,27 @@ export default class AddNew extends Component{
     }
     handleFormSubmit = (e) =>{
         e.preventDefault()
-        console.log(this.state.todo)
         this.props.onFormSubmit(this.state.todo)
     }
     render(){
         return(
-            <form onSubmit={this.handleFormSubmit}>
-                <label>
+            <form 
+                onSubmit={this.handleFormSubmit}
+                className="add__newtask--form"
+            >
+                <label className="add__newtask--label">
                     Add new task:
                     <input 
                         type="text" 
                         value={this.state.value}
                         onChange={this.handleInputChange}
                         placeholder="Add new task!"
+                        className="add_newtask--input"
                     />
                 </label>
-                <button>Send</button>
+                <button className="add__newtask--button">
+                    Send
+                </button>
             </form>
         )
     }
