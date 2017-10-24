@@ -9,15 +9,17 @@ class OneTask extends Component{
     }
   }
   handleDoneButton = () => {
-
+    this.setState({
+      isDone: true
+    })
   };
   handleDeleteButton = () => {
-    
+    this.props.onDeleteTodo(this.props.id)
   };
   render(){
     return (
       <li>
-        <p>{props.value}</p>
+        <p>{this.props.todo}</p>
         <div onClick={this.handleDoneButton}>Done</div>
         <div onClick={this.handleDeleteButton}>Delete</div>
       </li>
@@ -25,8 +27,5 @@ class OneTask extends Component{
   }
 };
 
-OneTask.propTypes = {
-  value: PropTypes.string.isRequired,
-};
 
 export default OneTask;

@@ -2,19 +2,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import OneTask from './one_task';
 
-const TaskList = props => (
-  <ul>
-    {props.tasks.map(elem => (
-      <OneTask
-        value={elem}
-        key={elem}
-      />
-    ))}
-  </ul>
-);
+const TaskList = props => {
+  return(
+    <ul>
+      { Object.keys(props.tasks).map(elem=>{
+        return <OneTask todo={props.tasks[elem].value} key={elem} id={elem} onDeleteTodo={props.onDeleteTodo}/>
+      })}
+    </ul>
+  )
+}
 
 TaskList.propTypes = {
-  tasks: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tasks: PropTypes.object.isRequired,
 };
 
 export default TaskList;
