@@ -79,7 +79,7 @@ export default class App extends Component{
                     Delete all tasks
                 </div>
                 <div 
-                    className="burron__delete-all-done"
+                    className="button__delete-all-done"
                     onClick={this.handleDeleteAllTasksButton}
                 >
                     Delete all done tasks

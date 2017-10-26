@@ -10176,7 +10176,8 @@ module.exports = getHostComponentFromComposite;
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(85);
+__webpack_require__(85);
+module.exports = __webpack_require__(191);
 
 
 /***/ }),
@@ -22040,7 +22041,7 @@ var App = function (_Component) {
 
         _this.onFormSubmit = function (todo) {
             var tasksCopy = _extends({}, _this.state.tasks);
-            var newId = _this.state.id + 1;
+            var newId = parseInt(_this.state.id + 1);
             tasksCopy[newId] = _extends({}, todo);
             _this.setState({
                 tasks: tasksCopy,
@@ -22075,6 +22076,19 @@ var App = function (_Component) {
             localStorage.setItem('Todos', JSON.stringify({}));
         };
 
+        _this.handleDeleteAllTasksButton = function () {
+            var copyObj = _extends({}, _this.state.tasks);
+            for (var key in copyObj) {
+                if (copyObj[key].isDone === true) {
+                    delete copyObj[key];
+                }
+            }
+            _this.setState({
+                tasks: copyObj
+            });
+            localStorage.setItem('Todos', JSON.stringify(copyObj));
+        };
+
         _this.state = {
             tasks: {},
             id: 0
@@ -22088,7 +22102,7 @@ var App = function (_Component) {
             var todos = JSON.parse(localStorage.getItem('Todos'));
             this.setState({
                 tasks: todos,
-                id: [Object.keys(todos)[Object.keys(todos).length]]
+                id: Object.keys(todos).length || 0
             });
         }
     }, {
@@ -22384,7 +22398,7 @@ var OneTask = function (_Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        CSSTransitionGroup,
+        'li',
         {
           className: 'single__task'
 
@@ -22427,6 +22441,12 @@ OneTask.propTypes = {
 };
 
 exports.default = OneTask;
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

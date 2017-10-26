@@ -1,0 +1,21 @@
+.button__delete-all{
+    background: linear-gradient(#f97779, #ce2424);
+    padding:1rem;
+    border:1px solid #be2424;
+    box-shadow: inset 0 0 0 1px #e67e7b;
+    &:hover{
+        background: linear-gradient(#ce2424, #f97779);
+    }
+    &-done{
+        background: linear-gradient(rgb(2, 166, 248),rgb(3, 71, 105));
+        padding:1rem;
+        border:1px solid rgb(0, 75, 112);
+        box-shadow: inset 0 0 0 1px rgb(120, 201, 241);
+        &:hover{
+            background: linear-gradient(rgb(3, 71, 105),rgb(2, 166, 248));
+        }
+    }
+}
+.single__task-button{
+    padding:0.5rem;
+}

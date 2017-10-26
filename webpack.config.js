@@ -1,6 +1,10 @@
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractSASS = new ExtractTextPlugin('./style/style.css');
+
 module.exports={
     entry:[
-        './src/index.jsx'
+        './src/index.jsx',
+        './style/scss/main.scss'
     ],
     output:{
         path:__dirname,
@@ -14,6 +18,12 @@ module.exports={
             query:{
                 presets: ['es2015', 'stage-1', 'react']
             }
+        },{
+            test: /\.scss$/,
+            use: extractSASS.extract({
+                fallback: 'style-loader',
+                use: ['css-loader', 'sass-loader']
+            })
         }]
     },
     resolve:{
@@ -24,5 +34,8 @@ module.exports={
         contentBase: './',
         inline: true,
         port:3000
-    }
+    },
+    plugins: [
+        extractSASS,
+    ]
 };

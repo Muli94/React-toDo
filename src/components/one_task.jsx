@@ -15,20 +15,19 @@ class OneTask extends Component{
     return (
       <li 
         className="single__task"
-
       >
         <p className="single__task--text">
           {this.props.todo}
         </p>
         <div 
           onClick={this.handleDoneButton} 
-          className="single__task-button_done"
+          className="single__task-button done"
         >
           Done
         </div>
         <div 
           onClick={this.handleDeleteButton} 
-          className="sindle__task-button_delete"
+          className="sindle__task-button delete"
         >
           Delete
         </div>
