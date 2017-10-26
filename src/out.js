@@ -22040,11 +22040,39 @@ var App = function (_Component) {
 
         _this.onFormSubmit = function (todo) {
             var tasksCopy = _extends({}, _this.state.tasks);
-            tasksCopy[_this.state.id] = _extends({}, todo);
+            var newId = _this.state.id + 1;
+            tasksCopy[newId] = _extends({}, todo);
             _this.setState({
                 tasks: tasksCopy,
-                id: _this.state.id + 1
+                id: newId
             });
+            localStorage.setItem('Todos', JSON.stringify(tasksCopy));
+        };
+
+        _this.onDeleteTodo = function (id) {
+            var copyObj = _extends({}, _this.state.tasks);
+            delete copyObj[id];
+            localStorage.setItem('Todos', JSON.stringify(copyObj));
+            _this.setState({
+                tasks: copyObj
+            });
+        };
+
+        _this.onDoneTodo = function (isDone, id) {
+            var copyObj = _extends({}, _this.state.tasks);
+            copyObj[id].isDone = isDone;
+            localStorage.setItem('Todos', JSON.stringify(copyObj));
+            console.log(copyObj[id]);
+            _this.setState({
+                tasks: copyObj
+            });
+        };
+
+        _this.handleDeleteAllButton = function () {
+            _this.setState({
+                tasks: {}
+            });
+            localStorage.setItem('Todos', JSON.stringify({}));
         };
 
         _this.state = {
@@ -22055,13 +22083,42 @@ var App = function (_Component) {
     }
 
     _createClass(App, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var todos = JSON.parse(localStorage.getItem('Todos'));
+            this.setState({
+                tasks: todos,
+                id: [Object.keys(todos)[Object.keys(todos).length]]
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'container' },
                 _react2.default.createElement(_add_new2.default, { onFormSubmit: this.onFormSubmit }),
-                _react2.default.createElement(_task_list2.default, { tasks: this.state.tasks })
+                _react2.default.createElement(_task_list2.default, {
+                    tasks: this.state.tasks,
+                    onDeleteTodo: this.onDeleteTodo,
+                    onDoneTodo: this.onDoneTodo
+                }),
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'button__delete-all',
+                        onClick: this.handleDeleteAllButton
+                    },
+                    'Delete all tasks'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'burron__delete-all-done',
+                        onClick: this.handleDeleteAllTasksButton
+                    },
+                    'Delete all done tasks'
+                )
             );
         }
     }]);
@@ -22133,21 +22190,25 @@ var AddNew = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 'form',
-                { onSubmit: this.handleFormSubmit },
+                {
+                    onSubmit: this.handleFormSubmit,
+                    className: 'add__newtask--form'
+                },
                 _react2.default.createElement(
                     'label',
-                    null,
+                    { className: 'add__newtask--label' },
                     'Add new task:',
                     _react2.default.createElement('input', {
                         type: 'text',
                         value: this.state.value,
                         onChange: this.handleInputChange,
-                        placeholder: 'Add new task!'
+                        placeholder: 'Add new task!',
+                        className: 'add_newtask--input'
                     })
                 ),
                 _react2.default.createElement(
                     'button',
-                    null,
+                    { className: 'add__newtask--button' },
                     'Send'
                 )
             );
@@ -22251,15 +22312,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var TaskList = function TaskList(props) {
   return _react2.default.createElement(
     'ul',
-    null,
+    { className: 'tasks__list' },
     Object.keys(props.tasks).map(function (elem) {
-      return _react2.default.createElement(_one_task2.default, { todo: elem.value, key: elem.id });
+      return _react2.default.createElement(_one_task2.default, {
+        todo: props.tasks[elem].value,
+        key: elem,
+        id: elem,
+        onDeleteTodo: props.onDeleteTodo,
+        onDoneTodo: props.onDoneTodo
+      });
     })
   );
 };
 
 TaskList.propTypes = {
-  tasks: _propTypes2.default.object.isRequired
+  tasks: _propTypes2.default.object.isRequired,
+  onDeleteTodo: _propTypes2.default.func.isRequired
 };
 
 exports.default = TaskList;
@@ -22302,16 +22370,13 @@ var OneTask = function (_Component) {
     var _this = _possibleConstructorReturn(this, (OneTask.__proto__ || Object.getPrototypeOf(OneTask)).call(this, props));
 
     _this.handleDoneButton = function () {
-      _this.setState({
-        isDone: true
-      });
+      _this.props.onDoneTodo(true, _this.props.id);
     };
 
-    _this.handleDeleteButton = function () {};
-
-    _this.state = {
-      isDone: false
+    _this.handleDeleteButton = function () {
+      _this.props.onDeleteTodo(_this.props.id);
     };
+
     return _this;
   }
 
@@ -22319,21 +22384,30 @@ var OneTask = function (_Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'li',
-        null,
+        CSSTransitionGroup,
+        {
+          className: 'single__task'
+
+        },
         _react2.default.createElement(
           'p',
-          null,
+          { className: 'single__task--text' },
           this.props.todo
         ),
         _react2.default.createElement(
           'div',
-          { onClick: this.handleDoneButton },
+          {
+            onClick: this.handleDoneButton,
+            className: 'single__task-button_done'
+          },
           'Done'
         ),
         _react2.default.createElement(
           'div',
-          { onClick: this.handleDeleteButton },
+          {
+            onClick: this.handleDeleteButton,
+            className: 'sindle__task-button_delete'
+          },
           'Delete'
         )
       );
@@ -22344,6 +22418,13 @@ var OneTask = function (_Component) {
 }(_react.Component);
 
 ;
+
+OneTask.propTypes = {
+  onDeleteTodo: _propTypes2.default.func.isRequired,
+  onDoneTodo: _propTypes2.default.func.isRequired,
+  todo: _propTypes2.default.string.isRequired,
+  id: _propTypes2.default.string.isRequired
+};
 
 exports.default = OneTask;
 

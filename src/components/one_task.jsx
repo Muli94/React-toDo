@@ -13,7 +13,10 @@ class OneTask extends Component{
   };
   render(){
     return (
-      <li className="single__task">
+      <li 
+        className="single__task"
+
+      >
         <p className="single__task--text">
           {this.props.todo}
         </p>

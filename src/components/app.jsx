@@ -15,12 +15,12 @@ export default class App extends Component{
         const todos = JSON.parse(localStorage.getItem('Todos'))
         this.setState({
             tasks: todos,
-            id: [Object.keys(todos)[Object.keys(todos).length]]
+            id: Object.keys(todos).length || 0
         })
     }
     onFormSubmit = (todo) =>{
         const tasksCopy = { ...this.state.tasks }
-        const newId = this.state.id + 1
+        const newId = parseInt(this.state.id + 1)
         tasksCopy[newId] = {...todo}
         this.setState({
             tasks: tasksCopy,
@@ -45,6 +45,24 @@ export default class App extends Component{
             tasks: copyObj
         })
     }
+    handleDeleteAllButton = () =>{
+        this.setState({
+            tasks: {}
+        })
+        localStorage.setItem('Todos', JSON.stringify({}))
+    }
+    handleDeleteAllTasksButton = () =>{
+        const copyObj = { ...this.state.tasks }
+        for(var key in copyObj){
+            if(copyObj[key].isDone === true){
+                delete copyObj[key]
+            }
+        }
+        this.setState({
+            tasks: copyObj
+        })
+        localStorage.setItem('Todos', JSON.stringify(copyObj))
+    }
     render(){
         return(
             <div className="container">
@@ -54,6 +72,18 @@ export default class App extends Component{
                     onDeleteTodo = {this.onDeleteTodo}
                     onDoneTodo = {this.onDoneTodo}
                 />
+                <div 
+                    className="button__delete-all"
+                    onClick={this.handleDeleteAllButton}
+                >
+                    Delete all tasks
+                </div>
+                <div 
+                    className="burron__delete-all-done"
+                    onClick={this.handleDeleteAllTasksButton}
+                >
+                    Delete all done tasks
+                </div>
             </div>
         )
     }
